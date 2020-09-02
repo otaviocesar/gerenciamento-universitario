@@ -1,4 +1,4 @@
-Gerenciamento de Alunos e Cursos 
+Gerenciamento de Alunos e Cursos Backend
 ===================================
 
 Java JDK versão 1.8
