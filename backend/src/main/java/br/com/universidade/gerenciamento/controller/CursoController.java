@@ -1,5 +1,6 @@
 package br.com.universidade.gerenciamento.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,10 +9,12 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.universidade.gerenciamento.model.Curso;
@@ -21,44 +24,47 @@ import br.com.universidade.gerenciamento.repository.CursoRepository;
 public class CursoController {
 
 	@Autowired
-	private CursoRepository _cursoRepository;
+	private CursoRepository cursoRepository;
 
-	@RequestMapping(value = "/curso", method = RequestMethod.GET)
-	public List<Curso> Get() {
-		return _cursoRepository.findAll();
+	@GetMapping(value = "/curso")
+	public List<Curso> findAll() {
+		return cursoRepository.findAll();
 	}
-
-	@RequestMapping(value = "/curso/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Curso> GetById(@PathVariable(value = "id") long id) {
-		Optional<Curso> curso = _cursoRepository.findById(id);
+	
+	@GetMapping(value = "/curso/{id}")
+	public ResponseEntity<Curso> findById(@PathVariable(value = "id") Long id) {
+		Optional<Curso> curso = cursoRepository.findById(id);
 		if (curso.isPresent())
 			return new ResponseEntity<>(curso.get(), HttpStatus.OK);
 		else
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
-
-	@RequestMapping(value = "/curso", method = RequestMethod.POST)
-	public Curso Post(@Valid @RequestBody Curso curso) {
-		return _cursoRepository.save(curso);
+	
+	@PostMapping(value = "/curso")
+	public Curso save(@Valid @RequestBody Curso curso) {
+		return cursoRepository.save(curso);
 	}
-
-	@RequestMapping(value = "/curso/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Curso> Put(@PathVariable(value = "id") long id, @Valid @RequestBody Curso newCurso) {
-		Optional<Curso> oldCurso = _cursoRepository.findById(id);
+	
+	@PutMapping(value = "/curso/{id}")
+	public ResponseEntity<Curso> update(@PathVariable(value = "id") Long id, @Valid @RequestBody Curso newCurso) {
+		Optional<Curso> oldCurso = cursoRepository.findById(id);
 		if (oldCurso.isPresent()) {
 			Curso curso = oldCurso.get();
 			curso.setNome(newCurso.getNome());
-			_cursoRepository.save(curso);
+			curso.setCargaHoraria(newCurso.getCargaHoraria());
+			curso.setCodigo(newCurso.getCodigo());
+			curso.setDataCadastro(LocalDateTime.now());
+			cursoRepository.save(curso);
 			return new ResponseEntity<>(curso, HttpStatus.OK);
 		} else
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
-
-	@RequestMapping(value = "/curso/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Object> Delete(@PathVariable(value = "id") long id) {
-		Optional<Curso> curso = _cursoRepository.findById(id);
+	
+	@DeleteMapping(value = "/curso/{id}")
+	public ResponseEntity<Object> delete(@PathVariable(value = "id") Long id) {
+		Optional<Curso> curso = cursoRepository.findById(id);
 		if (curso.isPresent()) {
-			_cursoRepository.delete(curso.get());
+			cursoRepository.delete(curso.get());
 			return new ResponseEntity<>(HttpStatus.OK);
 		} else
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
