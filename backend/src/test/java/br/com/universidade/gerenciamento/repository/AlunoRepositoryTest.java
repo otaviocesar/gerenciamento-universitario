@@ -24,6 +24,7 @@ public class AlunoRepositoryTest {
 	public void save() {
 		Aluno aluno = new Aluno();
 		aluno.setMatricula("1");
+		aluno.setIdCurso(1L);
 		aluno.setNome("Aluno 1");
 		aluno.setCpf("14386715045");
 		aluno.setCep("65000-000");
@@ -38,6 +39,7 @@ public class AlunoRepositoryTest {
 	public void saveAndFindAll() {
 		Aluno aluno = new Aluno();
 		aluno.setMatricula("1");
+		aluno.setIdCurso(1L);
 		aluno.setNome("Aluno 1");
 		aluno.setCpf("14386715045");
 		aluno.setCep("65000-000");
