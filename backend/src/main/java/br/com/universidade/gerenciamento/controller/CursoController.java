@@ -1,5 +1,6 @@
 package br.com.universidade.gerenciamento.controller;
 
+import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +19,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import br.com.universidade.gerenciamento.controller.dto.CursoCreateDto;
+import br.com.universidade.gerenciamento.controller.dto.CursoDto;
 import br.com.universidade.gerenciamento.model.Curso;
 import br.com.universidade.gerenciamento.repository.CursoRepository;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,29 +32,30 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/cursos")
 @Tag(name = "Cursos", description = "Grupo de endpoints para criar, listar, atualizar e deletar cursos")
 public class CursoController {
-
+	
 	@Autowired
 	private CursoRepository cursoRepository;
-
+	
 	@Operation(
 		summary = "Listar todos os cursos",
 		description = "Retorna uma lista com todas os cursos cadastrados"
 	)
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Curso> findAll() {
-		return cursoRepository.findAll();
+	public List<CursoDto> findAll() {
+		List<Curso> cursos = cursoRepository.findAll();
+		return CursoDto.converter(cursos);
 	}
-	
+
 	@Operation(summary = "Buscar curso", description = "Buscar um curso")
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Curso> findById(@PathVariable(value = "id") Long id) {
+	public ResponseEntity<CursoDto> findById(@PathVariable(value = "id") Long id) {
 		Optional<Curso> curso = cursoRepository.findById(id);
 		if (curso.isPresent())
-			return new ResponseEntity<>(curso.get(), HttpStatus.OK);
+			return ResponseEntity.ok(new CursoDto(curso.get()));
 		else
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return ResponseEntity.notFound().build();
 	}
-	
+
 	@Operation(
 		summary = "Adicionar um curso",
 		description = "Essa operacao salva um novo registro com as informacoes do curso"
@@ -58,16 +63,19 @@ public class CursoController {
 	@PostMapping(
 		consumes = MediaType.APPLICATION_JSON_VALUE
 	)
-	public Curso save(@Valid @RequestBody Curso curso) {
-		return cursoRepository.save(curso);
+	public ResponseEntity<CursoDto> save(@RequestBody CursoCreateDto cursoDTO,
+		UriComponentsBuilder uriBuilder) {
+		Curso curso = cursoRepository.save(cursoDTO.transformToNewCourse());
+		URI uri = uriBuilder.path("/cursos/{id}").buildAndExpand(curso.getId()).toUri();
+		return ResponseEntity.created(uri).body(new CursoDto(curso));
 	}
-	
+
 	@Operation(
 		summary = "Atualizar curso",
 		description = "Essa operacao atualiza os dados de um curso"
 	)
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Curso> update(@PathVariable(value = "id") Long id, @Valid @RequestBody Curso newCurso) {
+	public ResponseEntity<CursoDto> update(@PathVariable(value = "id") Long id, @Valid @RequestBody Curso newCurso) {
 		Optional<Curso> oldCurso = cursoRepository.findById(id);
 		if (oldCurso.isPresent()) {
 			Curso curso = oldCurso.get();
@@ -76,11 +84,11 @@ public class CursoController {
 			curso.setCodigo(newCurso.getCodigo());
 			curso.setDataCadastro(LocalDateTime.now());
 			cursoRepository.save(curso);
-			return new ResponseEntity<>(curso, HttpStatus.OK);
+			return ResponseEntity.ok(new CursoDto(curso));
 		} else
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return ResponseEntity.notFound().build();
 	}
-	
+
 	@Operation(
 		summary = "Excluir curso",
 		description = "Exclui o registro do curso cadastrado"

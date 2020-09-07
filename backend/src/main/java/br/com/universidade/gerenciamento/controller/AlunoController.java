@@ -1,5 +1,6 @@
 package br.com.universidade.gerenciamento.controller;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +18,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import br.com.universidade.gerenciamento.controller.dto.AlunoCreateDto;
+import br.com.universidade.gerenciamento.controller.dto.AlunoDto;
 import br.com.universidade.gerenciamento.model.Aluno;
 import br.com.universidade.gerenciamento.repository.AlunoRepository;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,29 +31,30 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/alunos")
 @Tag(name = "Alunos", description = "Grupo de endpoints para criar, listar, atualizar e deletar alunos")
 public class AlunoController {
-	
+
 	@Autowired
 	private AlunoRepository alunoRepository;
-	
+
 	@Operation(
 		summary = "Listar todos os alunos",
 		description = "Retorna uma lista com todas os alunos cadastrados"
 	)
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Aluno> findAll() {
-		return alunoRepository.findAll();
+	public List<AlunoDto> findAll() {
+		List<Aluno> alunos = alunoRepository.findAll();
+		return AlunoDto.converter(alunos);
 	}
-	
+
 	@Operation(summary = "Buscar aluno", description = "Buscar um aluno")
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Aluno> findById(@PathVariable(value = "id") Long id) {
+	public ResponseEntity<AlunoDto> findById(@PathVariable(value = "id") Long id) {
 		Optional<Aluno> aluno = alunoRepository.findById(id);
 		if (aluno.isPresent())
-			return new ResponseEntity<>(aluno.get(), HttpStatus.OK);
+			return ResponseEntity.ok(new AlunoDto(aluno.get()));
 		else
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return ResponseEntity.notFound().build();
 	}
-	
+
 	@Operation(
 		summary = "Adicionar um aluno",
 		description = "Essa operacao salva um novo registro com as informacoes do aluno"
@@ -57,16 +62,19 @@ public class AlunoController {
 	@PostMapping(
 		consumes = MediaType.APPLICATION_JSON_VALUE
 	)
-	public Aluno save(@Valid @RequestBody Aluno aluno) {
-		return alunoRepository.save(aluno);
+	public ResponseEntity<AlunoDto> save(@RequestBody AlunoCreateDto alunoDTO,
+		UriComponentsBuilder uriBuilder) {
+		Aluno aluno = alunoRepository.save(alunoDTO.transformToNewAluno());
+		URI uri = uriBuilder.path("/alunos/{id}").buildAndExpand(aluno.getId()).toUri();
+		return ResponseEntity.created(uri).body(new AlunoDto(aluno));
 	}
-	
+
 	@Operation(
 		summary = "Atualizar aluno",
 		description = "Essa operacao atualiza os dados de um aluno"
 	)
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Aluno> update(@PathVariable(value = "id") Long id, @Valid @RequestBody Aluno newAluno) {
+	public ResponseEntity<AlunoDto> update(@PathVariable(value = "id") Long id, @Valid @RequestBody Aluno newAluno) {
 		Optional<Aluno> oldAluno = alunoRepository.findById(id);
 		if (oldAluno.isPresent()) {
 			Aluno aluno = oldAluno.get();
@@ -76,14 +84,14 @@ public class AlunoController {
 			aluno.setEmail(newAluno.getEmail());
 			aluno.setTelefone(newAluno.getTelefone());
 			aluno.setEndereco(newAluno.getEndereco());
-			aluno.setIdCurso(newAluno.getIdCurso());
+			aluno.setCurso(newAluno.getCurso());
 			aluno.setMatricula(newAluno.getMatricula());
 			alunoRepository.save(aluno);
-			return new ResponseEntity<>(aluno, HttpStatus.OK);
+			return ResponseEntity.ok(new AlunoDto(aluno));
 		} else
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return ResponseEntity.notFound().build();
 	}
-	
+
 	@Operation(
 		summary = "Excluir aluno",
 		description = "Exclui o registro do aluno cadastrado"

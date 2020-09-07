@@ -1,110 +1,131 @@
 package br.com.universidade.gerenciamento.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Aluno {
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-
-	@Column(nullable = false)
-	private Long idCurso;
-
-	@Column(nullable = false)
+	
+	@ManyToOne
+	private Curso curso;
+	
 	private String matricula;
-
-	@Column(nullable = false)
+	
 	private String nome;
-
-	@Column(nullable = false)
+	
 	private String cpf;
-
-	@Column(nullable = false)
+	
 	private String endereco;
-
-	@Column(nullable = false)
+	
 	private String cep;
-
-	@Column(nullable = false)
+	
 	private String email;
-
-	@Column(nullable = false)
+	
 	private String telefone;
-
+	
+	public Aluno() {
+	}
+	
+	public Aluno(Long id, Curso curso, String matricula, String nome, String cpf, String endereco, String cep,
+		String email, String telefone) {
+		this.id = id;
+		this.curso = curso;
+		this.matricula = matricula;
+		this.nome = nome;
+		this.cpf = cpf;
+		this.endereco = endereco;
+		this.cep = cep;
+		this.email = email;
+		this.telefone = telefone;
+	}
+	
+	public Aluno(Curso curso, String matricula, String nome, String cpf, String endereco, String cep, String email,
+		String telefone) {
+		this.curso = curso;
+		this.matricula = matricula;
+		this.nome = nome;
+		this.cpf = cpf;
+		this.endereco = endereco;
+		this.cep = cep;
+		this.email = email;
+		this.telefone = telefone;
+	}
+	
 	public Long getId() {
 		return id;
 	}
-	
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
+	public Curso getCurso() {
+		return curso;
+	}
+	
+	public void setCurso(Curso curso) {
+		this.curso = curso;
+	}
 
-	public Long getIdCurso() {
-		return idCurso;
-	}
-	
-	public void setIdCurso(Long idCurso) {
-		this.idCurso = idCurso;
-	}
-	
 	public String getMatricula() {
 		return matricula;
 	}
-
+	
 	public void setMatricula(String matricula) {
 		this.matricula = matricula;
 	}
-	
+
 	public String getNome() {
 		return nome;
 	}
-
+	
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
+
 	public String getCpf() {
 		return cpf;
 	}
-
+	
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-
+	
 	public String getEndereco() {
 		return endereco;
 	}
-
+	
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
-
+	
 	public String getCep() {
 		return cep;
 	}
-
+	
 	public void setCep(String cep) {
 		this.cep = cep;
 	}
-
+	
 	public String getEmail() {
 		return email;
 	}
-
+	
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
+	
 	public String getTelefone() {
 		return telefone;
 	}
-
+	
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
