@@ -4,12 +4,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import br.com.universidade.gerenciamento.model.Aluno;
+import br.com.universidade.gerenciamento.model.Curso;
 
 public class AlunoDto {
+
+	private Curso curso;
 	
 	private Long id;
-	
-	private Long idCurso;
 
 	private String matricula;
 	
@@ -26,8 +27,8 @@ public class AlunoDto {
 	private String telefone;
 	
 	public AlunoDto(Aluno aluno) {
+		this.curso = aluno.getCurso();
 		this.id = aluno.getId();
-		this.idCurso = aluno.getIdCurso();
 		this.matricula = aluno.getMatricula();
 		this.nome = aluno.getNome();
 		this.cpf = aluno.getCpf();
@@ -43,14 +44,6 @@ public class AlunoDto {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-	
-	public Long getIdCurso() {
-		return idCurso;
-	}
-
-	public void setIdCurso(Long idCurso) {
-		this.idCurso = idCurso;
 	}
 
 	public String getMatricula() {
@@ -111,5 +104,13 @@ public class AlunoDto {
 	
 	public static List<AlunoDto> converter(List<Aluno> alunos) {
 		return alunos.stream().map(AlunoDto::new).collect(Collectors.toList());
+	}
+	
+	public Curso getCurso() {
+		return curso;
+	}
+	
+	public void setCurso(Curso curso) {
+		this.curso = curso;
 	}
 }
