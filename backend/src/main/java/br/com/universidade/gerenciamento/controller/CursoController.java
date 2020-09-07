@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.universidade.gerenciamento.controller.dto.CursoDto;
 import br.com.universidade.gerenciamento.model.Curso;
 import br.com.universidade.gerenciamento.repository.CursoRepository;
 import io.swagger.v3.oas.annotations.Operation;
@@ -37,8 +38,14 @@ public class CursoController {
 		description = "Retorna uma lista com todas os cursos cadastrados"
 	)
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Curso> findAll() {
-		return cursoRepository.findAll();
+	public List<CursoDto> lista(String nomeCurso) {
+		if (nomeCurso == null) {
+			List<Curso> cursos = cursoRepository.findAll();
+			return CursoDto.converter(cursos);
+		} else {
+			List<Curso> cursos = cursoRepository.findByCursoNome(nomeCurso);
+			return CursoDto.converter(cursos);
+		}
 	}
 	
 	@Operation(summary = "Buscar curso", description = "Buscar um curso")
