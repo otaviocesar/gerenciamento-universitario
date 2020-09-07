@@ -45,55 +45,21 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let curso of cursos">
-                      <td>{{product.id}}</td>
-                      <td>{{product.codigo}}</td>
-                      <td>{{product.nome}}</td>
-                      <td>{{product.dataCadastro}}</td>
-                      <td>{{product.cargaHoraria}}</td>
+                      <td>{{curso.id}}</td>
+                      <td>{{curso.codigo}}</td>
+                      <td>{{curso.nome}}</td>
+                      <td>{{curso.dataCadastro}}</td>
+                      <td>{{curso.cargaHoraria}}</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
               <!-- /.card-body -->
             </div>
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Encomendas</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body p-0">
-                <table class="table table-sm">
-                  <thead>
-                    <tr>
-                      <th style="width: 10px">#</th>
-                      <th>Cliente</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                </table>
-              </div>
-            </div>
             <!-- /.card -->
           </div>
           <!-- /.col -->
           <div class="col-md-6">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Produtos Vendidos</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body p-0">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th style="width: 10px">#</th>
-                      <th>Encomenda</th>
-                      <th>Produto</th>
-                    </tr>
-                  </thead>
-                </table>
-              </div>
-            </div>
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Alunos</h3>
@@ -110,10 +76,9 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let aluno of alunos">
-                      <td>{{user.id}}</td>
-                      <td>{{user.nome}}</td>
-                      <td>{{user.matricula}}</td>
-                      <!-- <td > <span class="badge badge-success">{{order.status}}</span></td> -->
+                      <td>{{aluno.id}}</td>
+                      <td>{{aluno.nome}}</td>
+                      <td>{{aluno.matricula}}</td>
                     </tr>
                   </tbody>
                 </table>

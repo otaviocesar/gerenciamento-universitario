@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Curso } from './model/curso';
+import { AlunoService } from './service/aluno.service';
+import { CursoService } from './service/curso.service';
+import { Aluno } from './model/aluno';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-principal',
@@ -7,9 +12,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PrincipalComponent implements OnInit {
 
-  constructor() { }
+  curso = {} as Curso;
+  cursos: Curso[];
+
+  aluno = {} as Aluno;
+  alunos: Aluno[];
+
+  constructor(private cursoService: CursoService, private alunoService: AlunoService) {}
 
   ngOnInit(): void {
+    this.getCursos();
+    this.getAlunos();
   }
-
+    // Chama o serviço para obtém todos os cursos
+    getCursos() {
+      this.cursoService.getCursos().subscribe((cursos: Curso[]) => {
+      this.cursos = cursos;
+      });
+    } 
+    // Chama o serviço para obtém todos os alunos
+    getAlunos() {
+      this.alunoService.getAlunos().subscribe((alunos: Aluno[]) => {
+      this.alunos = alunos;
+      });
+    }      
+   
+  // limpa o formulario
+  cleanForm(form: NgForm) {
+    form.resetForm();
+  }
 }
