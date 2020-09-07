@@ -16,11 +16,13 @@ import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatTableModule } from "@angular/material/table";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatSelectModule } from "@angular/material/select";
+import { CursoComponent } from './curso/curso.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
+    CursoComponent,
   ],
   imports: [
     BrowserModule,
