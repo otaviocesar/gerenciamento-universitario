@@ -17,12 +17,14 @@ import { MatTableModule } from "@angular/material/table";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatSelectModule } from "@angular/material/select";
 import { CursoComponent } from './curso/curso.component';
+import { AlunoComponent } from './aluno/aluno.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     CursoComponent,
+    AlunoComponent,
   ],
   imports: [
     BrowserModule,
