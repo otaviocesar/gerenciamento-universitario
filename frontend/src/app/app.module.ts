@@ -21,6 +21,7 @@ import { AlunoComponent } from './aluno/aluno.component';
 import { PrincipalComponent } from './principal/principal.component';
 import { CursoNovoComponent } from './curso-novo/curso-novo.component';
 import { CursoDetalheComponent } from './curso-detalhe/curso-detalhe.component';
+import { CursoEditarComponent } from './curso-editar/curso-editar.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { CursoDetalheComponent } from './curso-detalhe/curso-detalhe.component';
     PrincipalComponent,
     CursoNovoComponent,
     CursoDetalheComponent,
+    CursoEditarComponent,
   ],
   imports: [
     BrowserModule,

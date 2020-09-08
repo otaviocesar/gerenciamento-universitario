@@ -33,10 +33,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/cursos")
 @Tag(name = "Cursos", description = "Grupo de endpoints para criar, listar, atualizar e deletar cursos")
 public class CursoController {
-
+	
 	@Autowired
 	private CursoRepository cursoRepository;
-
+	
 	@Operation(
 		summary = "Listar todos os cursos",
 		description = "Retorna uma lista com todas os cursos cadastrados"
@@ -46,7 +46,7 @@ public class CursoController {
 		List<Curso> cursos = cursoRepository.findAll();
 		return CursoDto.converter(cursos);
 	}
-	
+
 	@Operation(summary = "Buscar curso", description = "Buscar um curso")
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<CursoDto> findById(@PathVariable(value = "id") Long id) {
@@ -56,7 +56,7 @@ public class CursoController {
 		else
 			return ResponseEntity.notFound().build();
 	}
-	
+
 	@Operation(
 		summary = "Adicionar um curso",
 		description = "Essa operacao salva um novo registro com as informacoes do curso"
@@ -69,7 +69,7 @@ public class CursoController {
 		URI uri = uriBuilder.path("/cursos/{id}").buildAndExpand(curso.getId()).toUri();
 		return ResponseEntity.created(uri).body(new CursoResponseDto(curso));
 	}
-	
+
 	@Operation(
 		summary = "Atualizar curso",
 		description = "Essa operacao atualiza os dados de um curso"
@@ -84,7 +84,7 @@ public class CursoController {
 		}
 		return ResponseEntity.notFound().build();
 	}
-	
+
 	@Operation(
 		summary = "Excluir curso",
 		description = "Exclui o registro do curso cadastrado"

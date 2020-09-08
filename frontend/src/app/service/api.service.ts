@@ -45,16 +45,16 @@ export class ApiService {
   updateCurso(id, Curso): Observable<any> {
     const url = `${apiCurso}/${id}`;
     return this.http.put(url, Curso, httpOptions).pipe(
-      tap(_ => console.log(`atualiza o produco com id=${id}`)),
+      tap(_ => console.log(`atualiza o curso com id=${id}`)),
       catchError(this.handleError<any>('updateCurso'))
     );
   }
 
   deleteCurso (id): Observable<Curso> {
-    const url = `${apiCurso}/delete/${id}`;
+    const url = `${apiCurso}/${id}`;
 
     return this.http.delete<Curso>(url, httpOptions).pipe(
-      tap(_ => console.log(`remove o Curso com id=${id}`)),
+      tap(_ => console.log(`remove o curso com id=${id}`)),
       catchError(this.handleError<Curso>('deleteCurso'))
     );
   }
