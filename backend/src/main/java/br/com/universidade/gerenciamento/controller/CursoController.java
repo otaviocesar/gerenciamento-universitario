@@ -1,15 +1,14 @@
 package br.com.universidade.gerenciamento.controller;
 
 import java.net.URI;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.universidade.gerenciamento.controller.dto.CursoCreateDto;
 import br.com.universidade.gerenciamento.controller.dto.CursoDto;
+import br.com.universidade.gerenciamento.form.AtualizarCursoForm;
 import br.com.universidade.gerenciamento.model.Curso;
 import br.com.universidade.gerenciamento.repository.CursoRepository;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,7 +40,7 @@ public class CursoController {
 		summary = "Listar todos os cursos",
 		description = "Retorna uma lista com todas os cursos cadastrados"
 	)
-	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping()
 	public List<CursoDto> findAll() {
 		List<Curso> cursos = cursoRepository.findAll();
 		return CursoDto.converter(cursos);
@@ -60,9 +60,8 @@ public class CursoController {
 		summary = "Adicionar um curso",
 		description = "Essa operacao salva um novo registro com as informacoes do curso"
 	)
-	@PostMapping(
-		consumes = MediaType.APPLICATION_JSON_VALUE
-	)
+	@PostMapping()
+	@Transactional
 	public ResponseEntity<CursoDto> save(@RequestBody CursoCreateDto cursoDTO,
 		UriComponentsBuilder uriBuilder) {
 		Curso curso = cursoRepository.save(cursoDTO.transformToNewCourse());
@@ -75,18 +74,14 @@ public class CursoController {
 		description = "Essa operacao atualiza os dados de um curso"
 	)
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<CursoDto> update(@PathVariable(value = "id") Long id, @Valid @RequestBody Curso newCurso) {
-		Optional<Curso> oldCurso = cursoRepository.findById(id);
-		if (oldCurso.isPresent()) {
-			Curso curso = oldCurso.get();
-			curso.setNome(newCurso.getNome());
-			curso.setCargaHoraria(newCurso.getCargaHoraria());
-			curso.setCodigo(newCurso.getCodigo());
-			curso.setDataCadastro(LocalDateTime.now());
-			cursoRepository.save(curso);
+	@Transactional
+	public ResponseEntity<CursoDto> update(@PathVariable Long id, @RequestBody @Valid AtualizarCursoForm form) {
+		Optional<Curso> optional = cursoRepository.findById(id);
+		if (optional.isPresent()) {
+			Curso curso = form.atualizar(id, cursoRepository);
 			return ResponseEntity.ok(new CursoDto(curso));
-		} else
-			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.notFound().build();
 	}
 
 	@Operation(
