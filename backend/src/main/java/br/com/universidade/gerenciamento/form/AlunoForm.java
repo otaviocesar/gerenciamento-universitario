@@ -1,19 +1,17 @@
-package br.com.universidade.gerenciamento.controller.dto;
-
-import java.util.List;
-import java.util.stream.Collectors;
+package br.com.universidade.gerenciamento.form;
 
 import br.com.universidade.gerenciamento.model.Aluno;
 import br.com.universidade.gerenciamento.model.Curso;
+import br.com.universidade.gerenciamento.repository.CursoRepository;
 
-public class AlunoCreateDto {
+public class AlunoForm {
 	
-	private Curso curso;
-
+	private String nomeCurso;
+	
 	private String matricula;
 	
 	private String nome;
-	
+
 	private String cpf;
 	
 	private String endereco;
@@ -23,36 +21,15 @@ public class AlunoCreateDto {
 	private String email;
 	
 	private String telefone;
-	
-	public AlunoCreateDto() {
-		super();
-	}
-	
-	public AlunoCreateDto(Aluno aluno) {
-		this.curso = aluno.getCurso();
-		this.matricula = aluno.getMatricula();
-		this.nome = aluno.getNome();
-		this.cpf = aluno.getCpf();
-		this.endereco = aluno.getEndereco();
-		this.cep = aluno.getCep();
-		this.email = aluno.getEmail();
-		this.telefone = aluno.getTelefone();
-	}
 
-	public Aluno transformToNewAluno() {
-		return new Aluno(
-			null,
-			curso,
-			matricula,
-			nome,
-			cpf,
-			endereco,
-			cep,
-			email,
-			telefone
-		);
+	public String getNomeCurso() {
+		return nomeCurso;
 	}
-
+	
+	public void setNomeCurso(String nomeCurso) {
+		this.nomeCurso = nomeCurso;
+	}
+	
 	public String getMatricula() {
 		return matricula;
 	}
@@ -60,7 +37,7 @@ public class AlunoCreateDto {
 	public void setMatricula(String matricula) {
 		this.matricula = matricula;
 	}
-
+	
 	public String getNome() {
 		return nome;
 	}
@@ -68,7 +45,7 @@ public class AlunoCreateDto {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
+	
 	public String getCpf() {
 		return cpf;
 	}
@@ -109,15 +86,8 @@ public class AlunoCreateDto {
 		this.telefone = telefone;
 	}
 	
-	public static List<AlunoCreateDto> converter(List<Aluno> alunos) {
-		return alunos.stream().map(AlunoCreateDto::new).collect(Collectors.toList());
-	}
-	
-	public Curso getCurso() {
-		return curso;
-	}
-	
-	public void setCurso(Curso curso) {
-		this.curso = curso;
+	public Aluno converter(CursoRepository cursoRepository) {
+		Curso curso = cursoRepository.findByNome(nomeCurso);
+		return new Aluno(curso, matricula, nome, cpf, endereco, cep, email, telefone);
 	}
 }
