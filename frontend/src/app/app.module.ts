@@ -20,6 +20,7 @@ import { CursoComponent } from './curso/curso.component';
 import { AlunoComponent } from './aluno/aluno.component';
 import { PrincipalComponent } from './principal/principal.component';
 import { CursoNovoComponent } from './curso-novo/curso-novo.component';
+import { CursoDetalheComponent } from './curso-detalhe/curso-detalhe.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { CursoNovoComponent } from './curso-novo/curso-novo.component';
     AlunoComponent,
     PrincipalComponent,
     CursoNovoComponent,
+    CursoDetalheComponent,
   ],
   imports: [
     BrowserModule,

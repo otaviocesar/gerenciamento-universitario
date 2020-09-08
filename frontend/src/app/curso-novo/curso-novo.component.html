@@ -1,16 +1,49 @@
-<div>
-    <h3>Adicionar Novo Curso</h3>
+<div class="content-wrapper">
+  <br><br><br>
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark">Sistema de Gerenciamento Universitário</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Sistema de Gerenciamento Universitário</li>
+          </ol>
+        </div>
+      </div>
+    </div>
   </div>
-  <form class="example-container" [formGroup]="cursoForm" (ngSubmit)="addCurso(cursoForm.value)">
-    <mat-form-field>
-      <input matInput name="nome" placeholder="Nome do Curso" formControlName="nome">
-    </mat-form-field>
-    <mat-form-field>
-      <textarea  matInput name="codigo" placeholder="Código do Curso" formControlName="codigo"></textarea>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput name="cargaHoraria" placeholder="Carga Horária do Curso" formControlName="cargaHoraria">
-    </mat-form-field>
-  
-    <button type="submit" [disabled]="!cursoForm.valid" mat-button color="primary" >Adicionar</button>
-  </form>
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Adicionar Novo Curso</h3>
+            </div>
+            <div class="card-body p-0">
+              <div class="container">
+                <form class="example-container" [formGroup]="cursoForm" (ngSubmit)="addCurso(cursoForm.value)">
+                  <mat-form-field>
+                    <input matInput name="nome" placeholder="Nome do Curso" formControlName="nome">
+                  </mat-form-field>
+                  <mat-form-field>
+                    <textarea  matInput name="codigo" placeholder="Código do Curso" formControlName="codigo"></textarea>
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input matInput name="cargaHoraria" placeholder="Carga Horária do Curso" formControlName="cargaHoraria">
+                  </mat-form-field>
+                  <button type="submit" [disabled]="!cursoForm.valid" mat-button color="primary" >Adicionar</button>
+                </form>
+            </div>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
