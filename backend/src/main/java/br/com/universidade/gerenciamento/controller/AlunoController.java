@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import br.com.universidade.gerenciamento.controller.dto.AlunoCreateDto;
 import br.com.universidade.gerenciamento.controller.dto.AlunoDto;
 import br.com.universidade.gerenciamento.form.AlunoForm;
+import br.com.universidade.gerenciamento.form.AtualizarAlunoForm;
 import br.com.universidade.gerenciamento.model.Aluno;
 import br.com.universidade.gerenciamento.repository.AlunoRepository;
 import br.com.universidade.gerenciamento.repository.CursoRepository;
@@ -66,12 +68,12 @@ public class AlunoController {
 	@PostMapping(
 		consumes = MediaType.APPLICATION_JSON_VALUE
 	)
-	public ResponseEntity<AlunoDto> save(@RequestBody @Valid AlunoForm form, UriComponentsBuilder uriBuilder) {
+	public ResponseEntity<AlunoCreateDto> save(@RequestBody @Valid AlunoForm form, UriComponentsBuilder uriBuilder) {
 		Aluno aluno = form.converter(cursoRepository);
 		alunoRepository.save(aluno);
 		
 		URI uri = uriBuilder.path("/alunos/{id}").buildAndExpand(aluno.getId()).toUri();
-		return ResponseEntity.created(uri).body(new AlunoDto(aluno));
+		return ResponseEntity.created(uri).body(new AlunoCreateDto(aluno));
 	}
 
 	@Operation(
@@ -79,22 +81,13 @@ public class AlunoController {
 		description = "Essa operacao atualiza os dados de um aluno"
 	)
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<AlunoDto> update(@PathVariable(value = "id") Long id, @Valid @RequestBody Aluno newAluno) {
-		Optional<Aluno> oldAluno = alunoRepository.findById(id);
-		if (oldAluno.isPresent()) {
-			Aluno aluno = oldAluno.get();
-			aluno.setNome(newAluno.getNome());
-			aluno.setCep(newAluno.getCep());
-			aluno.setCpf(newAluno.getCpf());
-			aluno.setEmail(newAluno.getEmail());
-			aluno.setTelefone(newAluno.getTelefone());
-			aluno.setEndereco(newAluno.getEndereco());
-			aluno.setCurso(newAluno.getCurso());
-			aluno.setMatricula(newAluno.getMatricula());
-			alunoRepository.save(aluno);
+	public ResponseEntity<AlunoDto> update(@PathVariable Long id, @RequestBody @Valid AtualizarAlunoForm form) {
+		Optional<Aluno> optional = alunoRepository.findById(id);
+		if (optional.isPresent()) {
+			Aluno aluno = form.atualizar(id, alunoRepository);
 			return ResponseEntity.ok(new AlunoDto(aluno));
-		} else
-			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.notFound().build();
 	}
 
 	@Operation(
