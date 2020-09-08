@@ -22,6 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.universidade.gerenciamento.controller.dto.CursoCreateDto;
 import br.com.universidade.gerenciamento.controller.dto.CursoDto;
+import br.com.universidade.gerenciamento.controller.dto.CursoResponseDto;
 import br.com.universidade.gerenciamento.form.AtualizarCursoForm;
 import br.com.universidade.gerenciamento.model.Curso;
 import br.com.universidade.gerenciamento.repository.CursoRepository;
@@ -32,10 +33,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/cursos")
 @Tag(name = "Cursos", description = "Grupo de endpoints para criar, listar, atualizar e deletar cursos")
 public class CursoController {
-	
+
 	@Autowired
 	private CursoRepository cursoRepository;
-	
+
 	@Operation(
 		summary = "Listar todos os cursos",
 		description = "Retorna uma lista com todas os cursos cadastrados"
@@ -45,7 +46,7 @@ public class CursoController {
 		List<Curso> cursos = cursoRepository.findAll();
 		return CursoDto.converter(cursos);
 	}
-
+	
 	@Operation(summary = "Buscar curso", description = "Buscar um curso")
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<CursoDto> findById(@PathVariable(value = "id") Long id) {
@@ -55,35 +56,35 @@ public class CursoController {
 		else
 			return ResponseEntity.notFound().build();
 	}
-
+	
 	@Operation(
 		summary = "Adicionar um curso",
 		description = "Essa operacao salva um novo registro com as informacoes do curso"
 	)
 	@PostMapping()
 	@Transactional
-	public ResponseEntity<CursoDto> save(@RequestBody CursoCreateDto cursoDTO,
+	public ResponseEntity<CursoResponseDto> save(@RequestBody CursoCreateDto cursoDTO,
 		UriComponentsBuilder uriBuilder) {
 		Curso curso = cursoRepository.save(cursoDTO.transformToNewCourse());
 		URI uri = uriBuilder.path("/cursos/{id}").buildAndExpand(curso.getId()).toUri();
-		return ResponseEntity.created(uri).body(new CursoDto(curso));
+		return ResponseEntity.created(uri).body(new CursoResponseDto(curso));
 	}
-
+	
 	@Operation(
 		summary = "Atualizar curso",
 		description = "Essa operacao atualiza os dados de um curso"
 	)
 	@PutMapping(value = "/{id}")
 	@Transactional
-	public ResponseEntity<CursoDto> update(@PathVariable Long id, @RequestBody @Valid AtualizarCursoForm form) {
+	public ResponseEntity<CursoResponseDto> update(@PathVariable Long id, @RequestBody @Valid AtualizarCursoForm form) {
 		Optional<Curso> optional = cursoRepository.findById(id);
 		if (optional.isPresent()) {
 			Curso curso = form.atualizar(id, cursoRepository);
-			return ResponseEntity.ok(new CursoDto(curso));
+			return ResponseEntity.ok(new CursoResponseDto(curso));
 		}
 		return ResponseEntity.notFound().build();
 	}
-
+	
 	@Operation(
 		summary = "Excluir curso",
 		description = "Exclui o registro do curso cadastrado"
