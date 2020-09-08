@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
-import { Curso } from './curso/model/curso';
-import { Aluno } from './aluno/model/aluno';
+import { Curso } from '../curso/model/curso';
+import { Aluno } from '../aluno/model/aluno';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap, map } from 'rxjs/operators';
 

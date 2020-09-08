@@ -2,6 +2,6 @@ export interface Curso {
     id: number;
     codigo: string;
     name: string;
-    dataCadastro: string;
+    dataCadastro: Date;
     cargaHoraria: string;
 }
