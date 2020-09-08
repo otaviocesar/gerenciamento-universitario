@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.universidade.gerenciamento.controller.dto.AlunoCreateDto;
 import br.com.universidade.gerenciamento.controller.dto.AlunoDto;
+import br.com.universidade.gerenciamento.controller.dto.AlunoResponseDto;
 import br.com.universidade.gerenciamento.form.AlunoForm;
 import br.com.universidade.gerenciamento.form.AtualizarAlunoForm;
 import br.com.universidade.gerenciamento.model.Aluno;
@@ -67,12 +67,12 @@ public class AlunoController {
 	)
 	@PostMapping()
 	@Transactional
-	public ResponseEntity<AlunoCreateDto> save(@RequestBody @Valid AlunoForm form, UriComponentsBuilder uriBuilder) {
+	public ResponseEntity<AlunoResponseDto> save(@RequestBody @Valid AlunoForm form, UriComponentsBuilder uriBuilder) {
 		Aluno aluno = form.converter(cursoRepository);
 		alunoRepository.save(aluno);
 
 		URI uri = uriBuilder.path("/alunos/{id}").buildAndExpand(aluno.getId()).toUri();
-		return ResponseEntity.created(uri).body(new AlunoCreateDto(aluno));
+		return ResponseEntity.created(uri).body(new AlunoResponseDto(aluno));
 	}
 	
 	@Operation(
@@ -81,11 +81,11 @@ public class AlunoController {
 	)
 	@PutMapping(value = "/{id}")
 	@Transactional
-	public ResponseEntity<AlunoDto> update(@PathVariable Long id, @RequestBody @Valid AtualizarAlunoForm form) {
+	public ResponseEntity<AlunoResponseDto> update(@PathVariable Long id, @RequestBody @Valid AtualizarAlunoForm form) {
 		Optional<Aluno> optional = alunoRepository.findById(id);
 		if (optional.isPresent()) {
 			Aluno aluno = form.atualizar(id, alunoRepository);
-			return ResponseEntity.ok(new AlunoDto(aluno));
+			return ResponseEntity.ok(new AlunoResponseDto(aluno));
 		}
 		return ResponseEntity.notFound().build();
 	}
