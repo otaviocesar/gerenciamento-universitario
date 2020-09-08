@@ -19,6 +19,9 @@ import { MatSelectModule } from "@angular/material/select";
 import { CursoComponent } from './curso/curso.component';
 import { AlunoComponent } from './aluno/aluno.component';
 import { PrincipalComponent } from './principal/principal.component';
+import { CursoNovoComponent } from './curso-novo/curso-novo.component';
+import { CursoDetalheComponent } from './curso-detalhe/curso-detalhe.component';
+import { CursoEditarComponent } from './curso-editar/curso-editar.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +30,9 @@ import { PrincipalComponent } from './principal/principal.component';
     CursoComponent,
     AlunoComponent,
     PrincipalComponent,
+    CursoNovoComponent,
+    CursoDetalheComponent,
+    CursoEditarComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Curso } from './model/curso';
 import { AlunoService } from './service/aluno.service';
 import { CursoService } from './service/curso.service';
-import { Aluno } from './model/aluno';
+import { Curso } from '../curso/model/curso';
+import { Aluno } from '../aluno/model/aluno';
 import { NgForm } from '@angular/forms';
 
 @Component({
