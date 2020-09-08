@@ -20,10 +20,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.universidade.gerenciamento.controller.dto.AlunoCreateDto;
 import br.com.universidade.gerenciamento.controller.dto.AlunoDto;
+import br.com.universidade.gerenciamento.form.AlunoForm;
 import br.com.universidade.gerenciamento.model.Aluno;
 import br.com.universidade.gerenciamento.repository.AlunoRepository;
+import br.com.universidade.gerenciamento.repository.CursoRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -34,6 +35,9 @@ public class AlunoController {
 
 	@Autowired
 	private AlunoRepository alunoRepository;
+	
+	@Autowired
+	private CursoRepository cursoRepository;
 
 	@Operation(
 		summary = "Listar todos os alunos",
@@ -62,9 +66,10 @@ public class AlunoController {
 	@PostMapping(
 		consumes = MediaType.APPLICATION_JSON_VALUE
 	)
-	public ResponseEntity<AlunoDto> save(@RequestBody AlunoCreateDto alunoDTO,
-		UriComponentsBuilder uriBuilder) {
-		Aluno aluno = alunoRepository.save(alunoDTO.transformToNewAluno());
+	public ResponseEntity<AlunoDto> save(@RequestBody @Valid AlunoForm form, UriComponentsBuilder uriBuilder) {
+		Aluno aluno = form.converter(cursoRepository);
+		alunoRepository.save(aluno);
+		
 		URI uri = uriBuilder.path("/alunos/{id}").buildAndExpand(aluno.getId()).toUri();
 		return ResponseEntity.created(uri).body(new AlunoDto(aluno));
 	}
