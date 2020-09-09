@@ -4,6 +4,7 @@ import { CursoService } from './service/curso.service';
 import { Curso } from '../curso/model/curso';
 import { Aluno } from '../aluno/model/aluno';
 import { NgForm } from '@angular/forms';
+import { ExcelService } from 'src/app/service/excel.service';
 
 @Component({
   selector: 'app-principal',
@@ -18,7 +19,7 @@ export class PrincipalComponent implements OnInit {
   aluno = {} as Aluno;
   alunos: Aluno[];
 
-  constructor(private cursoService: CursoService, private alunoService: AlunoService) {}
+  constructor(private cursoService: CursoService, private alunoService: AlunoService, private excelService:ExcelService) {}
 
   ngOnInit(): void {
     this.getCursos();
@@ -40,5 +41,13 @@ export class PrincipalComponent implements OnInit {
   // limpa o formulario
   cleanForm(form: NgForm) {
     form.resetForm();
+  }
+
+  exportCoursesAsXLSX():void {
+    this.excelService.exportAsExcelFile(this.cursos, 'cursos');
+  }
+
+  exportStudentsAsXLSX():void {
+    this.excelService.exportAsExcelFile(this.alunos, 'alunos');
   }
 }

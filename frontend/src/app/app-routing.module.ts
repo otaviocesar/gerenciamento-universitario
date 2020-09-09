@@ -5,6 +5,10 @@ import { CursoComponent } from './curso/curso.component';
 import { CursoNovoComponent } from './curso-novo/curso-novo.component';
 import { CursoDetalheComponent } from './curso-detalhe/curso-detalhe.component';
 import { CursoEditarComponent } from './curso-editar/curso-editar.component';
+import { AlunoEditarComponent } from './aluno-editar/aluno-editar.component';
+import { AlunoComponent } from './aluno/aluno.component';
+import { AlunoNovoComponent } from './aluno-novo/aluno-novo.component';
+import { AlunoDetalheComponent } from './aluno-detalhe/aluno-detalhe.component';
 import { PrincipalComponent } from './principal/principal.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
@@ -38,6 +42,26 @@ const routes: Routes = [
     path: 'curso-novo',
     component: CursoNovoComponent,
     data: { title: 'Adicionar Curso' }
+  },
+  {
+    path: 'alunos',
+    component: AlunoComponent, 
+    data: { title: 'Lista de Alunos' }
+  },
+  {
+    path: 'aluno-detalhe/:id',
+    component: AlunoDetalheComponent,
+    data: { title: 'Detalhe do Aluno' }
+  },
+  {
+    path: 'aluno-editar/:id',
+    component: AlunoEditarComponent,  
+    data: { title: 'Editar o Aluno' }
+  },
+  {
+    path: 'aluno-novo',
+    component: AlunoNovoComponent,
+    data: { title: 'Adicionar Aluno' }
   },
   { path: '',
     redirectTo: '/dashboard',

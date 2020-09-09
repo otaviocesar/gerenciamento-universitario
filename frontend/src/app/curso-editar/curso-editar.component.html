@@ -1,16 +1,38 @@
-<div>
-    <h3>Editar Curso</h3>
+<div class="content-wrapper">
+  <br><br><br>
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark">Editar Curso</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Sistema de Gerenciamento Universitário</li>
+          </ol>
+        </div>
+      </div>
+    </div>
   </div>
-  <form class="example-container" [formGroup]="cursoForm" (ngSubmit)="updateCurso(cursoForm.value)">
-    <mat-form-field>
-      <input matInput name="nome" placeholder="Nome do Curso" formControlName="nome">
-    </mat-form-field>
-    <mat-form-field>
-      <textarea  matInput name="codigo" placeholder="Código do Curso" formControlName="codigo"></textarea>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput name="cargaHoraria" placeholder="Carga Horária do Curso" formControlName="cargaHoraria">
-    </mat-form-field>
-
-    <button type="submit" [disabled]="!cursoForm.valid" mat-button color="primary" >Editar</button>
-  </form>
+  <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <form class="example-container" [formGroup]="cursoForm" (ngSubmit)="updateCurso(cursoForm.value)">
+              <mat-form-field>
+                <input matInput name="nome" placeholder="Nome do Curso" formControlName="nome">
+              </mat-form-field>
+              <mat-form-field>
+                <textarea  matInput name="codigo" placeholder="Código do Curso" formControlName="codigo"></textarea>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput name="cargaHoraria" placeholder="Carga Horária do Curso" formControlName="cargaHoraria">
+              </mat-form-field>
+              <button type="submit" [disabled]="!cursoForm.valid" mat-raised-button color="primary" >Editar</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+</div>
