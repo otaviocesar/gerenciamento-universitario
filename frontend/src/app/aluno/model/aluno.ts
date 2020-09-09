@@ -1,6 +1,6 @@
 export interface Aluno {
     id: number;
-    curso: string;
+    curso: [];
     matricula: string;
     nome: string;
     cpf: string;
