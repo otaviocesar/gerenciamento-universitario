@@ -25,6 +25,7 @@ import { CursoEditarComponent } from './curso-editar/curso-editar.component';
 import { AlunoNovoComponent } from './aluno-novo/aluno-novo.component';
 import { AlunoDetalheComponent } from './aluno-detalhe/aluno-detalhe.component';
 import { AlunoEditarComponent } from './aluno-editar/aluno-editar.component';
+import { ExcelService } from './service/excel.service';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,7 @@ import { AlunoEditarComponent } from './aluno-editar/aluno-editar.component';
     MatTableModule,
     MatToolbarModule,
   ],
-  providers: [],
+  providers: [ { provide: 'ORIGIN_URL', useValue: location.origin }, ExcelService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
