@@ -49,4 +49,40 @@
         </div>
       </div>
     </section>
+
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="example-container mat-elevation-z8">
+              <div class="example-loading-shade"
+                   *ngIf="isLoadingResults">
+                <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+              </div>
+              <mat-card class="example-card">
+                <mat-card-header>
+                  <mat-card-title><h2>Alunos</h2></mat-card-title>
+                </mat-card-header>
+                <table class="table table-sm">
+                  <thead>
+                    <tr>
+                      <th style="width: 10px">#</th>
+                      <th>Nome</th>
+                      <th>Matrícula</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let aluno of curso.alunos">
+                      <td>{{aluno.id}}</td>
+                      <td>{{aluno.nome}}</td>
+                      <td>{{aluno.matricula}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </mat-card>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 </div>

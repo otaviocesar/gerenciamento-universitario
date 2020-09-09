@@ -4,6 +4,7 @@ export interface Curso {
     nome: string;
     dataCadastro: Date;
     cargaHoraria: string;
+    alunos: [];
 }
 /* export class Curso {
 
