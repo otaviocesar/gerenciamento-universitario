@@ -22,6 +22,9 @@ import { PrincipalComponent } from './principal/principal.component';
 import { CursoNovoComponent } from './curso-novo/curso-novo.component';
 import { CursoDetalheComponent } from './curso-detalhe/curso-detalhe.component';
 import { CursoEditarComponent } from './curso-editar/curso-editar.component';
+import { AlunoNovoComponent } from './aluno-novo/aluno-novo.component';
+import { AlunoDetalheComponent } from './aluno-detalhe/aluno-detalhe.component';
+import { AlunoEditarComponent } from './aluno-editar/aluno-editar.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +36,9 @@ import { CursoEditarComponent } from './curso-editar/curso-editar.component';
     CursoNovoComponent,
     CursoDetalheComponent,
     CursoEditarComponent,
+    AlunoNovoComponent,
+    AlunoDetalheComponent,
+    AlunoEditarComponent,
   ],
   imports: [
     BrowserModule,

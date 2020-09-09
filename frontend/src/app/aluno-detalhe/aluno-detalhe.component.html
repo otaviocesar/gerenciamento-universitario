@@ -25,23 +25,28 @@
                 <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
               </div>
               <div class="button-row">
-                <button mat-flat-button color="primary" [routerLink]="['/cursos']"><mat-icon>chevron_left</mat-icon> Voltar</button>
+                <button mat-flat-button color="primary" [routerLink]="['/alunos']"><mat-icon>chevron_left</mat-icon> Voltar</button>
               </div>
               <mat-card class="example-card">
                 <mat-card-header>
-                  <mat-card-title><h2>{{curso.nome}}</h2></mat-card-title>
-                  <mat-card-subtitle>Código: {{curso.codigo}}</mat-card-subtitle>
-                  <mat-card-subtitle>Carga Horária: {{curso.cargaHoraria}}hs</mat-card-subtitle>
+                  <mat-card-title><h2>{{aluno.nome}}</h2></mat-card-title>
+                  <mat-card-subtitle>CPF: {{aluno.cpf}}</mat-card-subtitle>
+                  <mat-card-subtitle>Endereço: {{aluno.endereco}}</mat-card-subtitle>
+                  <mat-card-subtitle>CEP: {{aluno.cep}}</mat-card-subtitle>
+                  <mat-card-subtitle>Email: {{aluno.email}}</mat-card-subtitle>
+                  <mat-card-subtitle>Telefone: {{aluno.telefone}}</mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-content>
                   <dl>
-                    <dt>Criado em:</dt>
-                    <dd>{{curso.dataCadastro | date: 'dd/MM/yyyy'}}</dd>
+                  <dt>Curso:</dt>
+                    <dd>{{aluno.curso}}</dd>
+                    <dt>Matrícula:</dt>
+                    <dd>{{aluno.matricula}}</dd>
                   </dl>
                 </mat-card-content>
                 <mat-card-actions>
-                  <button mat-flat-button color="primary" class="teste" [routerLink]="['/curso-editar', curso.id]"><mat-icon>edit</mat-icon> Editar</button>
-                  <button mat-flat-button color="warn" (click)="deleteCurso(curso.id)"><mat-icon>delete</mat-icon> Excluir</button>
+                  <button mat-flat-button color="primary" class="teste" [routerLink]="['/aluno-editar', aluno.id]"><mat-icon>edit</mat-icon> Editar</button>
+                  <button mat-flat-button color="warn" (click)="deleteAluno(aluno.id)"><mat-icon>delete</mat-icon> Excluir</button>
                 </mat-card-actions>
               </mat-card>
             </div>

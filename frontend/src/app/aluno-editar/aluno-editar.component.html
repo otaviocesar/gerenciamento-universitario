@@ -1,0 +1,54 @@
+<div class="content-wrapper">
+  <br><br><br>
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark">Editar Aluno</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Sistema de Gerenciamento Universitário</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <form class="example-container" [formGroup]="alunoForm" (ngSubmit)="updateAluno(alunoForm.value)">
+              <mat-form-field>
+                <input matInput name="nome" placeholder="Nome do Aluno" formControlName="nome">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput name="cpf" placeholder="CPF" formControlName="cpf">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput name="curso" placeholder="Curso" formControlName="curso">
+              </mat-form-field>
+              <mat-form-field>
+                <textarea  matInput name="matricula" placeholder="Matrícula" formControlName="matricula"></textarea>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput name="endereco" placeholder="Endereço" formControlName="endereco">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput name="cep" placeholder="CEP" formControlName="cep">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput name="email" placeholder="E-mail" formControlName="email">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput name="telefone" placeholder="Telefone" formControlName="telefone">
+              </mat-form-field>
+              <button type="submit" [disabled]="!alunoForm.valid" mat-raised-button color="primary" >Editar</button>
+            </form>
+          </div>
+        </div>
+        <br><br><br>
+      </div>
+    </section>
+</div>
