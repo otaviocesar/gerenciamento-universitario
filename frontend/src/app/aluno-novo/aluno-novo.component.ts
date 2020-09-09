@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/service/api.service';
 import { CursoService } from 'src/app/aluno-novo/service/curso.service';
 import { Curso } from '../curso/model/curso';
+import { MascaraUtil } from 'src/app/service/mascara';
 
 @Component({
   selector: 'app-aluno-novo',
@@ -12,6 +13,9 @@ import { Curso } from '../curso/model/curso';
 })
 
 export class AlunoNovoComponent implements OnInit {
+  mascaraCpf = MascaraUtil.mascaraCpf;
+  mascaraTel = MascaraUtil.mascaraTelefone;
+  mascaraCep = MascaraUtil.mascaraCep;
   curso = {} as Curso;
   cursos: Curso[];
   alunoForm: FormGroup;
@@ -30,12 +34,12 @@ export class AlunoNovoComponent implements OnInit {
     this.getCursos();
     this.alunoForm = this.formBuilder.group({
     'nomeCurso' : [null, Validators.required],       
-    'matricula' : [null, Validators.required],
-    'nome' : [null, Validators.required],
+    'matricula' : [null, [Validators.required, Validators.pattern("^[0-9]+$")]],
+    'nome' : [null, [Validators.required, Validators.minLength(5), Validators.maxLength(60)]],
     'cpf' : [null, Validators.required],
     'endereco' : [null, Validators.required],
     'cep' : [null, Validators.required],
-    'email' : [null, Validators.required],
+    'email' : [null, [Validators.required, Validators.email]],
     'telefone' : [null, Validators.required]
   });
   }

@@ -27,19 +27,19 @@
                 <textarea  matInput name="matricula" placeholder="Matrícula" formControlName="matricula"></textarea>
               </mat-form-field>
               <mat-form-field>
-                <input matInput name="cpf" placeholder="CPF" formControlName="cpf">
+                <input matInput name="cpf" placeholder="CPF" [textMask]="{mask: mascaraCpf, guide: false}" formControlName="cpf">
               </mat-form-field>
               <mat-form-field>
                 <input matInput name="endereco" placeholder="Endereço" formControlName="endereco">
               </mat-form-field>
               <mat-form-field>
-                <input matInput name="cep" placeholder="CEP" formControlName="cep">
+                <input matInput name="cep" placeholder="CEP" [textMask]="{mask: mascaraCep, guide: false}" formControlName="cep">
               </mat-form-field>
               <mat-form-field>
                 <input matInput name="email" placeholder="E-mail" formControlName="email">
               </mat-form-field>
               <mat-form-field>
-                <input matInput name="telefone" placeholder="Telefone" formControlName="telefone">
+                <input matInput name="telefone" placeholder="Telefone" [textMask]="{mask: mascaraTel, guide: false}" formControlName="telefone">
               </mat-form-field>
               <button type="submit" [disabled]="!alunoForm.valid" mat-raised-button color="primary" >Editar</button>
             </form>

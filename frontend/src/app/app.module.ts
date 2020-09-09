@@ -26,6 +26,7 @@ import { AlunoNovoComponent } from './aluno-novo/aluno-novo.component';
 import { AlunoDetalheComponent } from './aluno-detalhe/aluno-detalhe.component';
 import { AlunoEditarComponent } from './aluno-editar/aluno-editar.component';
 import { ExcelService } from './service/excel.service';
+import { TextMaskModule } from 'angular2-text-mask';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { ExcelService } from './service/excel.service';
     MatSidenavModule,  
     MatTableModule,
     MatToolbarModule,
+    TextMaskModule,
   ],
   providers: [ { provide: 'ORIGIN_URL', useValue: location.origin }, ExcelService],
   bootstrap: [AppComponent]
