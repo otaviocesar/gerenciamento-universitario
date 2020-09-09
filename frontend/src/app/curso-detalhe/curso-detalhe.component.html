@@ -24,7 +24,7 @@
                    *ngIf="isLoadingResults">
                 <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
               </div>
-              <div class="button-row">
+              <div class="card">
                 <button mat-flat-button color="primary" [routerLink]="['/cursos']"><mat-icon>chevron_left</mat-icon> Voltar</button>
               </div>
               <mat-card class="example-card">
@@ -81,8 +81,12 @@
                 </table>
               </mat-card>
             </div>
+            <div class="card">
+              <button mat-flat-button color="accent" class="teste" onClick="window.print()"><mat-icon>archive</mat-icon> Imprimir</button>
+            </div>
           </div>
         </div>
+        <br><br><br><br>
       </div>
     </section>
 </div>
