@@ -2,12 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/service/api.service';
+import { MascaraUtil } from 'src/app/service/mascara';
 @Component({
   selector: 'app-aluno-editar',
   templateUrl: './aluno-editar.component.html',
   styleUrls: ['./aluno-editar.component.scss']
 })
 export class AlunoEditarComponent implements OnInit {
+  mascaraCpf = MascaraUtil.mascaraCpf;
+  mascaraTel = MascaraUtil.mascaraTelefone;
+  mascaraCep = MascaraUtil.mascaraCep;
   id: number = null;
   alunoForm: FormGroup;
   //curso: String = '';
@@ -25,13 +29,13 @@ export class AlunoEditarComponent implements OnInit {
     this.getAluno(this.route.snapshot.params['id']);
     this.alunoForm = this.formBuilder.group({
    //'nomeCurso' : [null, Validators.required],
-   'matricula' : [null, Validators.required],
-   'nome' : [null, Validators.required],
+   'matricula' : [null, [Validators.required, Validators.pattern("^[0-9]+$")]],
+   'nome' : [null, [Validators.required, Validators.minLength(5), Validators.maxLength(60)]],
    'cpf' : [null, Validators.required],
-   'cep' : [null, Validators.required],
    'endereco' : [null, Validators.required],
-   'email' : [null, Validators.required],
-   'telefone' : [null, Validators.required]
+   'cep' : [null, Validators.required],
+   'email' : [null, [Validators.required, Validators.email]],
+   'telefone' : [null, Validators.required],
  });
  }
 

@@ -12,5 +12,5 @@ export class AppComponent implements OnInit {
   ngOnInit() {
   }
 
-  title = 'adminlte3withangular9';
+  title = 'Universidade';
 }

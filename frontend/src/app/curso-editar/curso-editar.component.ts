@@ -19,9 +19,9 @@ export class CursoEditarComponent implements OnInit {
   ngOnInit() {
     this.getCurso(this.route.snapshot.params['id']);
     this.cursoForm = this.formBuilder.group({
-   'nome' : [null, Validators.required],
-   'codigo' : [null, Validators.required],
-   'cargaHoraria' : [null, Validators.required]
+    'nome' : [null, [Validators.required, Validators.minLength(5), Validators.maxLength(60)]],
+    'codigo' : [null, [Validators.required, Validators.minLength(5), Validators.maxLength(60)]],
+    'cargaHoraria' : [null, [Validators.required, Validators.pattern("^[0-9]+$")]]
  });
  }
 
