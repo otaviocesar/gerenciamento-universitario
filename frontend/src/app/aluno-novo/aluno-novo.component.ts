@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/service/api.service';
+import { CursoService } from 'src/app/aluno-novo/service/curso.service';
+import { Curso } from '../curso/model/curso';
+
 @Component({
   selector: 'app-aluno-novo',
   templateUrl: './aluno-novo.component.html',
@@ -9,8 +12,10 @@ import { ApiService } from 'src/app/service/api.service';
 })
 
 export class AlunoNovoComponent implements OnInit {
+  curso = {} as Curso;
+  cursos: Curso[];
   alunoForm: FormGroup;
-  curso: String = '';
+  nomeCurso: String = '';
   matricula: String = '';
   nome: String = '';
   cpf: String = '';
@@ -19,11 +24,12 @@ export class AlunoNovoComponent implements OnInit {
   email: String = '';
   telefone: String = '';
   isLoadingResults = false;
-  constructor(private router: Router, private api: ApiService, private formBuilder: FormBuilder) { }
+  constructor(private router: Router, private api: ApiService, private formBuilder: FormBuilder, private cursoService: CursoService) { }
 
   ngOnInit() {
-     this.alunoForm = this.formBuilder.group({
-    'curso' : [null, Validators.required],
+    this.getCursos();
+    this.alunoForm = this.formBuilder.group({
+    'nomeCurso' : [null, Validators.required],       
     'matricula' : [null, Validators.required],
     'nome' : [null, Validators.required],
     'cpf' : [null, Validators.required],
@@ -33,6 +39,13 @@ export class AlunoNovoComponent implements OnInit {
     'telefone' : [null, Validators.required]
   });
   }
+
+  // Chama o serviço para obtém todos os cursos
+  getCursos() {
+      this.cursoService.getCursos().subscribe((cursos: Curso[]) => {
+      this.cursos = cursos;
+    });
+  } 
 
   addAluno(form: NgForm) {
     this.isLoadingResults = true;
@@ -46,4 +59,5 @@ export class AlunoNovoComponent implements OnInit {
           this.isLoadingResults = false;
         });
   }
+
 }

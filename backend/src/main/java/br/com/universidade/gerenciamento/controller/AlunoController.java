@@ -67,14 +67,15 @@ public class AlunoController {
 	)
 	@PostMapping()
 	@Transactional
-	public ResponseEntity<AlunoResponseDto> save(@RequestBody @Valid AlunoForm form, UriComponentsBuilder uriBuilder) {
+	public ResponseEntity<AlunoResponseDto> save(@RequestBody @Valid AlunoForm form,
+		UriComponentsBuilder uriBuilder) {
 		Aluno aluno = form.converter(cursoRepository);
 		alunoRepository.save(aluno);
 
 		URI uri = uriBuilder.path("/alunos/{id}").buildAndExpand(aluno.getId()).toUri();
 		return ResponseEntity.created(uri).body(new AlunoResponseDto(aluno));
 	}
-	
+
 	@Operation(
 		summary = "Atualizar aluno",
 		description = "Essa operacao atualiza os dados de um aluno"
