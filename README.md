@@ -15,7 +15,7 @@ Serviço Build     | Maven(Java)
 
 ### Acessando a aplicação
 Componente        | URL                                      | Comando:
----               | ---                                      |
+---               | ---                                      | ---
 Frontend          |  http://localhost:8081                   | ng serve --port 8081
 H2 Database       |  http://localhost:8080/h2                |
 Swagger (API Ref) |  http://localhost:8080/swagger-ui.html   | 
@@ -33,14 +33,11 @@ mvn clean install package
 ```
 @Repository - Camada responsável pelo acesso direto ao banco de dados.
 
-@Service - Nessa camada intermediária é implementada a maioria as regras de negócio da aplicação. A partir dela acessamos a camada de repositórios.  
-
 @Controller - Essa camada possui todos os end-points da API Rest, ela é a camada de acesso primária e a partir dela temos acesso a camada de serviços. 
  
 ```
 
-* O arquivo application.propperties possui a conexão com o banco de dados, configuração do servidor de e-mail e a configuração de acesso ao broker do RabbitMQ. Essa aplicação utiliza o banco de dados embarcado H2, sendo assim todos os dados são armazenados em memória o que torna os testes em desenvolvimento muito mais ágeis. A configuração de e-mail é necessária para o disparo de mensagens. Deve-se colocar o nome de usuário e senha do seu servidor de e-mail e lembrar de habilitar o acesso a aplicativos menos seguros. O broker RabbitMQ é possui um nome de usuário e senha padrão quando executado em localhost mas pode-se criar usuários personalizados.  
-
+* O arquivo application.propperties possui a conexão com o banco de dados.
 ```application.propperties
 
 #datasource
