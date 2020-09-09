@@ -8,7 +8,7 @@ import { Aluno } from 'src/app/aluno/model/aluno';
   styleUrls: ['./aluno-detalhe.component.scss']
 })
 export class AlunoDetalheComponent implements OnInit {
-  aluno: Aluno = { id: null, curso: '', matricula: '', nome: '', cpf: '', endereco:'', cep:'', email:'', telefone:''};
+  aluno: Aluno = { id: null, curso: [], matricula: '', nome: '', cpf: '', endereco:'', cep:'', email:'', telefone:''};
   isLoadingResults = true;
   constructor(private router: Router, private route: ActivatedRoute, private api: ApiService) { }
 
