@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { Curso } from '../curso/model/curso';
 import { Aluno } from '../aluno/model/aluno';
+import { NovoAluno } from 'src/app/aluno-novo/model/aluno';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap, map } from 'rxjs/operators';
 
@@ -24,6 +25,14 @@ export class ApiService {
         tap(Cursos => console.log('leu os Cursos')),
         catchError(this.handleError('getCursos', []))
       );
+  }
+
+  getListaCursos() {
+    return this.http.get<Curso[]>(apiCurso);
+  }
+
+  getCourses() {
+
   }
 
   getCurso(id: number): Observable<Curso> {
@@ -75,12 +84,8 @@ export class ApiService {
     );
   }
 
-  addAluno (Aluno): Observable<Aluno> {
-    return this.http.post<Aluno>(apiAluno, Aluno, httpOptions).pipe(
-      // tslint:disable-next-line:no-shadowed-variable
-      tap((Aluno: Aluno) => console.log(`adicionou o Aluno com w/ id=${Aluno.id}`)),
-      catchError(this.handleError<Aluno>('addAluno'))
-    );
+  addAluno (NovoAluno): Observable<NovoAluno> {
+    return this.http.post<NovoAluno>(apiAluno, NovoAluno, httpOptions);
   }
 
   updateAluno(id, Aluno): Observable<any> {
@@ -92,7 +97,7 @@ export class ApiService {
   }
 
   deleteAluno (id): Observable<Aluno> {
-    const url = `${apiAluno}/delete/${id}`;
+    const url = `${apiAluno}/${id}`;
 
     return this.http.delete<Aluno>(url, httpOptions).pipe(
       tap(_ => console.log(`remove o Aluno com id=${id}`)),

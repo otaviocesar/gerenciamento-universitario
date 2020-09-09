@@ -10,7 +10,7 @@ import { ApiService } from 'src/app/service/api.service';
 export class AlunoEditarComponent implements OnInit {
   id: number = null;
   alunoForm: FormGroup;
-  curso: String = '';
+  //curso: String = '';
   matricula: String = '';
   nome: String = '';
   cpf: String = '';
@@ -24,11 +24,12 @@ export class AlunoEditarComponent implements OnInit {
   ngOnInit() {
     this.getAluno(this.route.snapshot.params['id']);
     this.alunoForm = this.formBuilder.group({
-   'curso' : [null, Validators.required],
+   //'nomeCurso' : [null, Validators.required],
    'matricula' : [null, Validators.required],
    'nome' : [null, Validators.required],
    'cpf' : [null, Validators.required],
    'cep' : [null, Validators.required],
+   'endereco' : [null, Validators.required],
    'email' : [null, Validators.required],
    'telefone' : [null, Validators.required]
  });
@@ -38,7 +39,6 @@ export class AlunoEditarComponent implements OnInit {
   this.api.getAluno(id).subscribe(data => {
     this.id = data.id;
     this.alunoForm.setValue({
-      curso: data.curso,
       matricula: data.matricula,
       nome: data.nome,
       cpf: data.cpf,

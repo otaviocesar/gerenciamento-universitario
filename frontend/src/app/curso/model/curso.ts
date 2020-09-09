@@ -5,3 +5,14 @@ export interface Curso {
     dataCadastro: Date;
     cargaHoraria: string;
 }
+/* export class Curso {
+
+    constructor(
+        public id: number,
+        public codigo: string,
+        public nome: string,
+        public dataCadastro: Date,
+        public cargaHoraria: string
+    ) {  }
+  
+  } */

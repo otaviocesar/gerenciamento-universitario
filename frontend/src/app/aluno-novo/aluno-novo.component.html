@@ -22,9 +22,18 @@
               <div class="card-body p-0">
                 <div class="container">
                   <form class="example-container" [formGroup]="alunoForm" (ngSubmit)="addAluno(alunoForm.value)">
-                    <mat-form-field>
-                        <textarea  matInput name="curso" placeholder="Curso" formControlName="curso"></textarea>
-                      </mat-form-field>
+                    <!-- <mat-form-field>  
+                    <select class="form-control" id="nomeCurso" formControlName="nomeCurso">
+                        <option *ngFor="let curso of cursos" [value]="curso.nome">{{ curso.nome }}</option>
+                    </select>
+                    </mat-form-field> -->
+                    <div class="form-group">
+                      <label for="power">Curso</label>
+                      <select class="form-control"  id="curso" formControlName="nomeCurso"
+                              required >
+                        <option *ngFor="let curso of cursos" [value]="curso.nome">{{curso.nome}}</option>
+                      </select>
+                    </div>
                     <mat-form-field>
                       <textarea  matInput name="matricula" placeholder="Matrícula do Aluno" formControlName="matricula"></textarea>
                     </mat-form-field>
